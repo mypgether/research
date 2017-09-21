@@ -1,4 +1,4 @@
-package com.gether.research.test.kafka.streams.case2.Producer;
+package com.gether.research.test.kafka.streams.case2.producer;
 
 import com.alibaba.fastjson.JSON;
 import com.gether.research.test.kafka.streams.base.GenericDeserializer;
@@ -54,7 +54,7 @@ public class RequestProducer {
     }
 
     public static List<RequestInfo> read() throws IOException {
-        List<String> lines = FileUtils.readLines(new File("/Users/myp/Git/github/research/src/test/java/com/gether/research/test/kafka/streams/case2/Producer/request.csv"));
+        List<String> lines = FileUtils.readLines(new File("/Users/myp/Git/github/research/src/test/java/com/gether/research/test/kafka/streams/case2/producer/request.csv"));
         return lines.stream().filter(StringUtils::isNoneBlank)
                 .map(s -> s.split("\t"))
                 .filter(s -> s.length == 7)

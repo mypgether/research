@@ -15,7 +15,6 @@ import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KStreamBuilder;
 import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.Predicate;
 import org.apache.kafka.streams.kstream.ValueJoiner;
 
 import java.io.IOException;
@@ -54,12 +53,7 @@ public class PurchaseHighLevelAnalysis {
 						return OrderUser.fromOrderUser(order, user);
 					}
 				}, Serdes.String(), SerdesFactory.serdFrom(Order.class))
-				.filter(new Predicate<String, OrderUser>() {
-					@Override
-					public boolean test(String s, OrderUser orderUser) {
-						return StringUtils.isNotBlank(orderUser.userAddress);
-					}
-				})
+				.filter((s, orderUser) -> StringUtils.isNotBlank(orderUser.userAddress))
 				.map((String userName, OrderUser orderUser) -> new KeyValue<String, OrderUser>(orderUser.itemName, orderUser))
 				.through(Serdes.String(), SerdesFactory.serdFrom(OrderUser.class), (String key, OrderUser orderUser, int numPartitions) -> (orderUser.getItemName().hashCode() & 0x7FFFFFFF) % numPartitions, "orderuser-repartition-by-item")
 				.leftJoin(itemTable, (OrderUser orderUser, Item item) -> OrderUserItem.fromOrderUser(orderUser, item), Serdes.String(), SerdesFactory.serdFrom(OrderUser.class))

@@ -14,10 +14,13 @@ public class RatelimiterTest {
 
     @Test
     public void test() {
-        RateLimiter limiter = RateLimiter.create(100);
+        //RateLimiter limiter = RateLimiter.create(100, 2000, TimeUnit.MILLISECONDS);
+        RateLimiter limiter = RateLimiter.create(3);
         AtomicInteger index = new AtomicInteger(0);
         ForkJoinPool fjPool = new ForkJoinPool(100);
-        fjPool.submit(new NeverStopAction(limiter, index));
+        for (int i = 0; i < 10; i++) {
+            fjPool.submit(new NeverStopAction(limiter, index));
+        }
         while (true) {
 
         }
@@ -34,8 +37,13 @@ public class RatelimiterTest {
 
         @Override
         protected void compute() {
-            limiter.acquire();
-            System.out.println(System.currentTimeMillis() + " get access i:" + index.incrementAndGet());
+            long start = System.currentTimeMillis();
+            boolean time = limiter.tryAcquire(1);
+            //if(time) {
+            //if(time>=0.01) {
+            System.out.println(System.currentTimeMillis() + " get access i:" + index.incrementAndGet() + " :" + time + " :" + (System.currentTimeMillis() - start));
+            //}
+            //}
             invokeAll(new NeverStopAction(limiter, index));
         }
     }

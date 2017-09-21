@@ -1,8 +1,5 @@
 package com.gether.research.kafka;
 
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
@@ -41,32 +38,32 @@ public class KafkaConfig {
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
     }
-
-    @Bean
-    public KafkaProducer getKafkaProducer() {
-        KafkaProducer<String, String> producer = new KafkaProducer<String, String>(config);
-        return producer;
-    }
-
-    @Bean(name = "kafkaConsumer")
-    public KafkaConsumer getKafkaConsumer() {
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-        return consumer;
-    }
-
-    @Bean(name = "kafkaConsumer2")
-    public KafkaConsumer getKafkaConsumer2() {
-        Properties props = new Properties();
-        //消费者配置文件
-        props.put("bootstrap.servers", "localhost:9092");
-        props.put("zookeeper.connect", "localhost:2181");
-        props.put("group.id", "research-consumer-1");
-        props.put("enable.auto.commit", "true");
-        //自动提交消费情况间隔时间
-        props.put("auto.commit.interval.ms", "1000");
-        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-        return consumer;
-    }
+    //
+    //@Bean
+    //public KafkaProducer getKafkaProducer() {
+    //    KafkaProducer<String, String> producer = new KafkaProducer<String, String>(config);
+    //    return producer;
+    //}
+    //
+    //@Bean(name = "kafkaConsumer")
+    //public KafkaConsumer getKafkaConsumer() {
+    //    KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+    //    return consumer;
+    //}
+    //
+    //@Bean(name = "kafkaConsumer2")
+    //public KafkaConsumer getKafkaConsumer2() {
+    //    Properties props = new Properties();
+    //    //消费者配置文件
+    //    props.put("bootstrap.servers", "localhost:9092");
+    //    props.put("zookeeper.connect", "localhost:2181");
+    //    props.put("group.id", "research-consumer-1");
+    //    props.put("enable.auto.commit", "true");
+    //    //自动提交消费情况间隔时间
+    //    props.put("auto.commit.interval.ms", "1000");
+    //    props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+    //    props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+    //    KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+    //    return consumer;
+    //}
 }

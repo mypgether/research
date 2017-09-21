@@ -16,7 +16,7 @@ public class ProducerConsumerTest {
     //    ProducerConsumerImpl sharedObject = new ProducerConsumerImpl();
     //
     //    // creating producer and consumer threads
-    //    Producer p = new Producer(sharedObject);
+    //    producer p = new producer(sharedObject);
     //    Consumer c = new Consumer(sharedObject);
     //
     //    // starting producer and consumer threads

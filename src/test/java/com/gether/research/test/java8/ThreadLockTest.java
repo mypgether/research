@@ -24,7 +24,7 @@ public class ThreadLockTest {
                     count.incrementAndGet();
                     if (count.get() == 10) {
                         System.out.println("Thread a start signalAll");
-                        LOCK_C1.signalAll();
+                        //LOCK_C1.signalAll();
                         count.set(0);
                     }
                 } finally {

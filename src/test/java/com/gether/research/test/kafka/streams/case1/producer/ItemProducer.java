@@ -73,7 +73,7 @@ public class ItemProducer {
 		while (true) {
 			ConsumerRecords<String, Item> records = consumer.poll(100);
 			records.forEach(record -> {
-				System.out.printf("topic: %s , partition: %d , offset = %d, key = %s, value = %s%n", record.topic(), record.partition(), record.offset(), record.key(), JSON.toJSONString(record.value()));
+				System.err.printf("topic: %s , partition: %d , offset = %d, key = %s, value = %s%n", record.topic(), record.partition(), record.offset(), record.key(), JSON.toJSONString(record.value()));
 				if (atomicLong.get() % 10 == 0) {
 					consumer.commitSync();
 				}

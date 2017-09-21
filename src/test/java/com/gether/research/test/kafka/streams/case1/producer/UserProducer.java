@@ -1,19 +1,28 @@
 package com.gether.research.test.kafka.streams.case1.producer;
 
+import com.alibaba.fastjson.JSON;
+import com.gether.research.test.kafka.streams.base.GenericDeserializer;
 import com.gether.research.test.kafka.streams.base.GenericSerializer;
 import com.gether.research.test.kafka.streams.base.HashPartitioner;
+import com.gether.research.test.kafka.streams.case1.bean.Item;
 import com.gether.research.test.kafka.streams.case1.bean.User;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 public class UserProducer {
@@ -44,5 +53,31 @@ public class UserProducer {
 				.map((String[] values) -> new User(values[0], values[1], values[2], Integer.parseInt(values[3])))
 				.collect(Collectors.toList());
 		return users;
+	}
+
+	@Test
+	public void consumSource() {
+		Properties props = new Properties();
+		props.put("bootstrap.servers", "localhost:9092");
+		props.put("group.id", "consumer.3.4");
+		props.put("enable.auto.commit", "false");
+		props.put("key.deserializer", StringDeserializer.class.getName());
+		props.put("value.deserializer", GenericDeserializer.class.getName());
+		props.put("value.deserializer.type", User.class.getName());
+		props.put("max.poll.interval.ms", "300000");
+		props.put("max.poll.records", "500");
+		props.put("auto.offset.reset", "earliest");
+		KafkaConsumer<String, Item> consumer = new KafkaConsumer<>(props);
+		consumer.subscribe(Arrays.asList("users"));
+		AtomicLong atomicLong = new AtomicLong();
+		while (true) {
+			ConsumerRecords<String, Item> records = consumer.poll(100);
+			records.forEach(record -> {
+				System.err.printf("topic: %s , partition: %d , offset = %d, key = %s, value = %s%n", record.topic(), record.partition(), record.offset(), record.key(), JSON.toJSONString(record.value()));
+				if (atomicLong.get() % 10 == 0) {
+					consumer.commitSync();
+				}
+			});
+		}
 	}
 }
