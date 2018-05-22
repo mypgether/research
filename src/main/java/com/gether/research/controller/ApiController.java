@@ -1,6 +1,5 @@
 package com.gether.research.controller;
 
-import com.gether.research.constants.PromethusConstants;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import io.prometheus.client.CollectorRegistry;
@@ -15,6 +14,7 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -23,6 +23,8 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
+
+    Random r = new Random();
 
     @RequestMapping("/name")
     @HystrixCommand(fallbackMethod = "getNameFallback", commandKey = "deviceListKey", threadPoolKey = "deviceListKey",
@@ -35,7 +37,12 @@ public class ApiController {
                     @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1440")
             })
     public String getName() {
-        PromethusConstants.a();
+        int sleepInt = r.nextInt(2000);
+        try {
+            Thread.sleep(sleepInt);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "this is normal name";
     }
 

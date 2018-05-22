@@ -57,7 +57,7 @@ public class PurchaseHighLevelAnalysis {
 				.map((String userName, OrderUser orderUser) -> new KeyValue<String, OrderUser>(orderUser.itemName, orderUser))
 				.through(Serdes.String(), SerdesFactory.serdFrom(OrderUser.class), (String key, OrderUser orderUser, int numPartitions) -> (orderUser.getItemName().hashCode() & 0x7FFFFFFF) % numPartitions, "orderuser-repartition-by-item")
 				.leftJoin(itemTable, (OrderUser orderUser, Item item) -> OrderUserItem.fromOrderUser(orderUser, item), Serdes.String(), SerdesFactory.serdFrom(OrderUser.class))
-				.filter((String item, OrderUserItem orderUserItem) -> StringUtils.compare(orderUserItem.userAddress, orderUserItem.itemAddress) == 0)
+				.filter((String item, OrderUserItem orderUserItem) -> StringUtils.equals(orderUserItem.userAddress, orderUserItem.itemAddress))
 				.map((String item, OrderUserItem orderUserItem) -> KeyValue.<AddrSex, AmountPrice>pair(
 						new AddrSex(orderUserItem.itemAddress, orderUserItem.gender), new AmountPrice(orderUserItem.quantity, orderUserItem.quantity * orderUserItem.itemPrice)))
 				.groupByKey(SerdesFactory.serdFrom(AddrSex.class), SerdesFactory.serdFrom(AmountPrice.class))

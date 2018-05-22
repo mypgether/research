@@ -58,7 +58,6 @@ public class UserPurchaseAnalysis {
         KTable<String, User> userKTable = kStreamBuilder.table(Serdes.String(), SerdesFactory.serdFrom(User.class), "users");
         KTable<String, Item> itemKTable = kStreamBuilder.table(Serdes.String(), SerdesFactory.serdFrom(Item.class), "items");
 
-
         KTable<AddressGender, OrderItemUser> purchaseResult = orderKStreamam
                 .leftJoin(userKTable, (order, user) -> {
                     OrderUser orderItem = new OrderUser();
@@ -69,11 +68,14 @@ public class UserPurchaseAnalysis {
                     } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
+                    if (null == user) {
+                        return null;
+                    }
                     orderItem.setUserAddress(user.getAddress());
                     orderItem.setGender(user.getGender());
                     return orderItem;
                 }, Serdes.String(), SerdesFactory.serdFrom(Order.class))
-                .filter((key,value)->StringUtils.isNotBlank(value.getUserAddress()))
+                .filter((key,value)->null!=value && StringUtils.isNotBlank(value.getUserAddress()))
                 .map((key, value) -> new KeyValue<String, OrderUser>(value.getItemName(), value))
                 // 需要join就一定要保证同样的key在一个partition当中
                 .through(Serdes.String(), SerdesFactory.serdFrom(OrderUser.class), new StreamPartitioner<String, OrderUser>() {

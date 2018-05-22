@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class OrderProducer {
 
-	private static DateTimeFormatter dataTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	public static DateTimeFormatter dataTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	public static void main(String[] args) throws Exception {
 		Properties props = new Properties();

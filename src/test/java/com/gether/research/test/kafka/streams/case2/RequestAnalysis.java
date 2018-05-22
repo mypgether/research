@@ -25,6 +25,8 @@ import java.util.Properties;
  */
 public class RequestAnalysis {
 
+    public static final String servername = "";
+
     public static void main(String[] args) throws IOException {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-request-analysis");
@@ -39,7 +41,7 @@ public class RequestAnalysis {
         KStream<String, RequestInfo> streams = kStreamBuilder.stream(Serdes.String(), SerdesFactory.serdFrom(RequestInfo.class), "requests");
 
         KTable<String, Long> ktable =
-                streams.filter((key, requestInfo) -> StringUtils.equalsIgnoreCase("ESD", requestInfo.getServerModel()))
+                streams.filter((key, requestInfo) -> StringUtils.equalsIgnoreCase(servername, requestInfo.getServer()))
                         .map((String key, RequestInfo requestInfo) -> KeyValue.<String, RequestInfo>pair(requestInfo.getPath(), requestInfo))
                         .groupByKey(Serdes.String(), SerdesFactory.serdFrom(RequestInfo.class))
                         .count();

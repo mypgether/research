@@ -1,7 +1,6 @@
 package com.gether.research;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @ImportResource(locations = { "classpath:META-INF/spring/applicationContext.xml" })
 @ComponentScan
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 //@EnableCircuitBreaker
 //@EnableDiscoveryClient
 @EnableTransactionManagement

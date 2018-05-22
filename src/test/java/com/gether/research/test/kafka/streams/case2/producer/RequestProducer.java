@@ -49,7 +49,7 @@ public class RequestProducer {
         Producer<String, RequestInfo> producer = new KafkaProducer<>(props);
         List<RequestInfo> items = read();
         System.out.println(items.size());
-        items.forEach((RequestInfo item) -> producer.send(new ProducerRecord<>(TOPIC, item.getServerModel(), item)));
+        items.forEach((RequestInfo item) -> producer.send(new ProducerRecord<>(TOPIC, item.getServer(), item)));
         producer.close();
     }
 
@@ -60,8 +60,7 @@ public class RequestProducer {
                 .filter(s -> s.length == 7)
                 .map((s) -> {
                     RequestInfo requestInfo = new RequestInfo();
-                    //ESD	192.168.22.11	DeviceStatus	{"deviceId":"xxxxS_08ea4054bb43"}	SUCCESS	32	null
-                    requestInfo.setServerModel(s[0]);
+                    requestInfo.setServer(s[0]);
                     requestInfo.setIp(s[1]);
                     requestInfo.setPath(s[2]);
                     requestInfo.setReqParams(s[3]);

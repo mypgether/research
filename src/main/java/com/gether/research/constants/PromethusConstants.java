@@ -2,18 +2,17 @@ package com.gether.research.constants;
 
 import com.soundcloud.prometheus.hystrix.HystrixPrometheusMetricsPublisher;
 import io.prometheus.client.CollectorRegistry;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by myp on 2017/9/20.
  */
-public class PromethusConstants {
+@Component
+public class PromethusConstants implements InitializingBean {
 
-    static {
-        HystrixPrometheusMetricsPublisher.register("research");
+    @Override
+    public void afterPropertiesSet() throws Exception {
         HystrixPrometheusMetricsPublisher.register("research", CollectorRegistry.defaultRegistry);
-    }
-
-    public static void a() {
-        System.out.println("ok");
     }
 }

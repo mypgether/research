@@ -13,7 +13,7 @@ public class ProfilePojo {
     private ObjectId id;
     private String deviceId;
     private String productKey;
-    private String modelId;
+    private String d;
     private Map<String, Map<String,String>> map;
     private Date createTime;
 
@@ -57,11 +57,11 @@ public class ProfilePojo {
         this.productKey = productKey;
     }
 
-    public String getModelId() {
-        return modelId;
+    public String getd() {
+        return d;
     }
 
-    public void setModelId(String modelId) {
-        this.modelId = modelId;
+    public void setd(String d) {
+        this.d = d;
     }
 }

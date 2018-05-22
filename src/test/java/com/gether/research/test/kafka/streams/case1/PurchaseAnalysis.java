@@ -16,6 +16,10 @@ import org.apache.kafka.streams.kstream.KTable;
 
 import java.io.IOException;
 import java.util.Properties;
+
+/**
+ * 目前有三个表：产品表，用户表，订单表。求性别平均消费金额
+ */
 public class PurchaseAnalysis {
 
 	/**
@@ -25,7 +29,7 @@ public class PurchaseAnalysis {
 	 */
 	public static void main(String[] args) throws IOException, InterruptedException {
 		Properties props = new Properties();
-		props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-purchase-analysis2");
+		props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-purchase-analysis2-v2");
 		props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		props.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 		props.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
@@ -42,7 +46,7 @@ public class PurchaseAnalysis {
 				.map((String userName, OrderUser orderUser) -> new KeyValue<String, OrderUser>(orderUser.itemName, orderUser))
 				.through(Serdes.String(), SerdesFactory.serdFrom(OrderUser.class), (String key, OrderUser orderUser, int numPartitions) -> (orderUser.getItemName().hashCode() & 0x7FFFFFFF) % numPartitions, "orderuser-repartition-by-item")
 				.leftJoin(itemTable, (OrderUser orderUser, Item item) -> OrderUserItem.fromOrderUser(orderUser, item), Serdes.String(), SerdesFactory.serdFrom(OrderUser.class))
-				.filter((String item, OrderUserItem orderUserItem) -> StringUtils.compare(orderUserItem.userAddress, orderUserItem.itemAddress) == 0)
+				.filter((String item, OrderUserItem orderUserItem) -> StringUtils.equals(orderUserItem.userAddress, orderUserItem.itemAddress))
 				.map((String item, OrderUserItem orderUserItem) -> KeyValue.<String, Double>pair(orderUserItem.gender, (Double) (orderUserItem.quantity * orderUserItem.itemPrice)))
 				.groupByKey(Serdes.String(), Serdes.Double())
 				.reduce((Double v1, Double v2) -> v1 + v2, "gender-amount-state-store");

@@ -28,7 +28,7 @@ public class OKHttpTest {
 
     @Test
     public void syncGet() throws IOException {
-        Request request = new Request.Builder().url("https://ads.reservehemu.com/ms/v1/ads/page/start").build();
+        Request request = new Request.Builder().url("https://www.baidu.com/").build();
         Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
@@ -120,8 +120,8 @@ public class OKHttpTest {
                 .readTimeout(1, TimeUnit.SECONDS)
                 .build();
 
-        RequestBody body = new FormBody.Builder().add("device_id", "xxxxS_t00000700002").build();
-        Request request = new Request.Builder().url("http://localhost:8011/ms/v1/region/list").post(body).build();
+        RequestBody body = new FormBody.Builder().add("name", "gether").build();
+        Request request = new Request.Builder().url("https://www.baidu.com/").post(body).build();
         try (Response response = client1.newCall(request).execute()) {
             System.out.println("Response 1 succeeded: " + response);
         } catch (IOException e) {

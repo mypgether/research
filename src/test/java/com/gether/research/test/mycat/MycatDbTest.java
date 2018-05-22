@@ -22,18 +22,18 @@ public class MycatDbTest {
             Class.forName(driver);
             conn = DriverManager.getConnection(url, userName, passwrod);
             //conn.setAutoCommit(false);
-            PreparedStatement ps = conn.prepareStatement("update o_device set devicename='哈哈' where did=31028;");
+            PreparedStatement ps = conn.prepareStatement("update test_table set devicename='哈哈' where did=31028;");
             int row = ps.executeUpdate();
             System.out.println("update row " + row);
 
 
-            ps = conn.prepareStatement("select * from o_device where did=31028;");
+            ps = conn.prepareStatement("select * from test_table where id=31028;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                System.out.println("name : " + rs.getString("devicename"));
+                System.out.println("name : " + rs.getString("name"));
             }
 
-            ps = conn.prepareStatement("insert into o_device (did,deviceid,status,registertime,devicename,productkey,modelid,cloudid,uid) values(500003,'xxxxs_asd','1',now(),'device name ','1','2',2,2);");
+            ps = conn.prepareStatement("insert into test_table (id,name,create_time,modify_time) values(1,'gether',now(),now());");
             ps.execute();
             conn.commit();
         } catch (Exception e) {

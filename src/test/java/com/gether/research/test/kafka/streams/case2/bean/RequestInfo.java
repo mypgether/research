@@ -4,7 +4,7 @@ package com.gether.research.test.kafka.streams.case2.bean;
  * Created by myp on 2017/8/23.
  */
 public class RequestInfo {
-    private String serverModel;
+    private String server;
     private String ip;
     private String path;
     private String reqParams;
@@ -15,12 +15,12 @@ public class RequestInfo {
     public RequestInfo() {
     }
 
-    public String getServerModel() {
-        return serverModel;
+    public String getServer() {
+        return server;
     }
 
-    public void setServerModel(String serverModel) {
-        this.serverModel = serverModel;
+    public void setServer(String server) {
+        this.server = server;
     }
 
     public String getIp() {
