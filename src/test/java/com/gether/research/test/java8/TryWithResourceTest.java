@@ -13,14 +13,15 @@ import java.util.Date;
  */
 public class TryWithResourceTest {
 
-    public static void main(String[] args) {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new URL("http://www.baidu.com").openStream()))) {
-            String line = reader.readLine();
-            SimpleDateFormat format = new SimpleDateFormat("MM/DD/YY");
-            Date date = format.parse(line);
-            System.out.println(date);
-        } catch (ParseException | IOException exception) {
-            exception.printStackTrace();
-        }
+  public static void main(String[] args) {
+    try (BufferedReader reader = new BufferedReader(
+        new InputStreamReader(new URL("http://www.baidu.com").openStream()))) {
+      String line = reader.readLine();
+      SimpleDateFormat format = new SimpleDateFormat("MM/DD/YY");
+      Date date = format.parse(line);
+      System.out.println(date);
+    } catch (ParseException | IOException exception) {
+      exception.printStackTrace();
     }
+  }
 }
