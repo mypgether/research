@@ -10,58 +10,58 @@ import java.util.Map;
  */
 public class ProfilePojo {
 
-    private ObjectId id;
-    private String deviceId;
-    private String productKey;
-    private String d;
-    private Map<String, Map<String,String>> map;
-    private Date createTime;
+  private ObjectId id;
+  private String deviceId;
+  private String productKey;
+  private String d;
+  private Map<String, Map<String, String>> map;
+  private Date createTime;
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+  public Date getCreateTime() {
+    return createTime;
+  }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
-    public Map<String, Map<String, String>> getMap() {
-        return map;
-    }
+  public Map<String, Map<String, String>> getMap() {
+    return map;
+  }
 
-    public void setMap(Map<String, Map<String, String>> map) {
-        this.map = map;
-    }
+  public void setMap(Map<String, Map<String, String>> map) {
+    this.map = map;
+  }
 
-    public ObjectId getId() {
-        return id;
-    }
+  public ObjectId getId() {
+    return id;
+  }
 
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
+  public void setId(ObjectId id) {
+    this.id = id;
+  }
 
-    public String getDeviceId() {
-        return deviceId;
-    }
+  public String getDeviceId() {
+    return deviceId;
+  }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
+  public void setDeviceId(String deviceId) {
+    this.deviceId = deviceId;
+  }
 
-    public String getProductKey() {
-        return productKey;
-    }
+  public String getProductKey() {
+    return productKey;
+  }
 
-    public void setProductKey(String productKey) {
-        this.productKey = productKey;
-    }
+  public void setProductKey(String productKey) {
+    this.productKey = productKey;
+  }
 
-    public String getd() {
-        return d;
-    }
+  public String getd() {
+    return d;
+  }
 
-    public void setd(String d) {
-        this.d = d;
-    }
+  public void setd(String d) {
+    this.d = d;
+  }
 }

@@ -2,6 +2,8 @@ package com.gether.research.test.java8;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.TimerTask;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -58,6 +60,32 @@ public class ThreadLocalTest {
       System.out.println("main thread get -->" + threadLocal.get());
       System.out.println("main thread get -->" + threadLocalb.get());
       Thread.sleep(5000);
+    }
+  }
+
+  static class LocalVariable {
+
+    private Long[] a = new Long[1024 * 1024];
+  }
+
+  final static ThreadPoolExecutor poolExecutor = new ThreadPoolExecutor(5, 5, 1, TimeUnit.MINUTES,
+      new LinkedBlockingQueue<>());
+  final static ThreadLocal<LocalVariable> localVariable = new ThreadLocal<LocalVariable>();
+
+  public static void main(String[] args) throws InterruptedException {
+    for (int i = 0; i < 50; ++i) {
+      poolExecutor.execute(() -> {
+        while (true) {
+          localVariable.set(new LocalVariable());
+          System.out.println("use local varaible");
+//          localVariable.remove();
+//          try {
+//            Thread.sleep(200);
+//          } catch (InterruptedException e) {
+//            e.printStackTrace();
+//          }
+        }
+      });
     }
   }
 }

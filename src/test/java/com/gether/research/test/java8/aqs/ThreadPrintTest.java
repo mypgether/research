@@ -84,4 +84,55 @@ public class ThreadPrintTest {
       }
     }
   }
+
+  volatile boolean flag = false;
+
+  @Test
+  public void testThreadprint() throws InterruptedException {
+    ReentrantLock lock = new ReentrantLock();
+    Condition produceCondition = lock.newCondition();
+    Condition consumeCondition = lock.newCondition();
+
+    Thread takeThread = new Thread(() -> {
+      try {
+        int i = 1;
+        while (i <= 51) {
+          lock.lock();
+          try {
+            if (flag) {
+              consumeCondition.await();
+            }
+            System.out.print(i);
+            System.out.print(i + 1);
+            i = i + 2;
+            produceCondition.signalAll();
+            flag = true;
+          } finally {
+            lock.unlock();
+          }
+        }
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }, "take-Thread");
+    takeThread.start();
+
+    int i = 0;
+    while (i <= 25) {
+      lock.lock();
+      try {
+        if (!flag) {
+          produceCondition.await();
+        }
+        char c = (char) (i + 'A');
+        System.out.print(c);
+        flag = false;
+        i = i + 1;
+        consumeCondition.signalAll();
+      } finally {
+        lock.unlock();
+      }
+    }
+    takeThread.join();
+  }
 }

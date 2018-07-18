@@ -1,5 +1,8 @@
 package com.gether.research.test.java8.aqs;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import org.junit.Test;
@@ -7,12 +10,16 @@ import org.junit.Test;
 public class SemaphoreTest {
 
   @Test
-  public void testSemaphore() {
+  public void testSemaphore() throws InterruptedException {
     int maxCount = 10;
+    int count = maxCount * 2;
+
     Semaphore semaphore = new Semaphore(maxCount);
-    for (int i = 0; i < maxCount * 2; i++) {
+    CountDownLatch latch = new CountDownLatch(count);
+    ExecutorService pool = Executors.newFixedThreadPool(count);
+    for (int i = 0; i < count; i++) {
       int finalI = i;
-      new Thread(() -> {
+      Thread t = new Thread(() -> {
         try {
           long start = System.currentTimeMillis();
           System.out.println("Thread " + finalI + " get semaphore start");
@@ -26,23 +33,24 @@ public class SemaphoreTest {
               "Thread " + finalI + " get semaphore end, cost time " + (System.currentTimeMillis()
                   - start));
           semaphore.release();
+          latch.countDown();
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-      }).start();
+      });
+      pool.submit(t);
     }
 
-    try {
-      Thread.sleep(12000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    latch.await();
   }
 
   @Test
-  public void testSemaphoreSelf() {
+  public void testSemaphoreSelf() throws InterruptedException {
     int maxCount = 10;
+    int count = maxCount * 2;
+
     SemaphoreSelf semaphore = new SemaphoreSelf(maxCount);
+    CountDownLatch latch = new CountDownLatch(count);
     for (int i = 0; i < maxCount * 2; i++) {
       int finalI = i;
       new Thread(() -> {
@@ -61,16 +69,13 @@ public class SemaphoreTest {
         } catch (InterruptedException e) {
           e.printStackTrace();
         } finally {
+          latch.countDown();
           semaphore.release();
         }
       }).start();
     }
 
-    try {
-      Thread.sleep(12000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    latch.await();
   }
 
   public class SemaphoreSelf {
