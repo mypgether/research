@@ -1,11 +1,12 @@
 package com.gether.research.test.guava;
 
 import com.google.common.util.concurrent.RateLimiter;
-import org.junit.Test;
-
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.joda.time.DateTime;
+import org.junit.Test;
 
 /**
  * Created by myp on 2017/6/28.
@@ -13,17 +14,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RatelimiterTest {
 
   @Test
-  public void test() {
-    //RateLimiter limiter = RateLimiter.create(100, 2000, TimeUnit.MILLISECONDS);
-    RateLimiter limiter = RateLimiter.create(3);
+  public void test() throws InterruptedException {
+    RateLimiter limiter = RateLimiter.create(5);
     AtomicInteger index = new AtomicInteger(0);
     ForkJoinPool fjPool = new ForkJoinPool(100);
     for (int i = 0; i < 10; i++) {
       fjPool.submit(new NeverStopAction(limiter, index));
     }
-    while (true) {
 
-    }
+    fjPool.awaitTermination(10, TimeUnit.SECONDS);
+    fjPool.shutdown();
   }
 
   public class NeverStopAction extends RecursiveAction {
@@ -38,16 +38,20 @@ public class RatelimiterTest {
 
     @Override
     protected void compute() {
-      long start = System.currentTimeMillis();
-      boolean time = limiter.tryAcquire(1);
-      //if(time) {
-      //if(time>=0.01) {
-      System.out.println(
-          System.currentTimeMillis() + " get access i:" + index.incrementAndGet() + " :" + time
-              + " :" + (System.currentTimeMillis() - start));
-      //}
-      //}
-      invokeAll(new NeverStopAction(limiter, index));
+      while (true) {
+        boolean getLock = limiter.tryAcquire(1);
+        if (getLock) {
+          System.err.println(
+              new DateTime().toString("yyyy-MM-dd HH:mm:ss") + " get access i:" + index
+                  .incrementAndGet() + " :" + getLock);
+          try {
+            Thread.sleep(5000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+
+        }
+      }
     }
   }
 }

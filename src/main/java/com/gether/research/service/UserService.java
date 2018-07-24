@@ -8,4 +8,5 @@ public interface UserService {
 
   public User getUser(String userName);
 
+  public String getUserName(String userName);
 }

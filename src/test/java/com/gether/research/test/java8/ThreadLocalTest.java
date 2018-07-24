@@ -31,11 +31,10 @@ public class ThreadLocalTest {
     Thread.sleep(10000);
   }
 
-  ThreadLocal<String> threadLocal = new ThreadLocal<>();
-  ThreadLocal<String> threadLocalb = new ThreadLocal<>();
-
   @Test
   public void threadLocalTest() throws InterruptedException {
+    ThreadLocal<String> threadLocal = new ThreadLocal<>();
+    ThreadLocal<String> threadLocalb = new ThreadLocal<>();
     threadLocal.set("nihao");
     threadLocalb.set("heheh ");
 
@@ -78,12 +77,6 @@ public class ThreadLocalTest {
         while (true) {
           localVariable.set(new LocalVariable());
           System.out.println("use local varaible");
-//          localVariable.remove();
-//          try {
-//            Thread.sleep(200);
-//          } catch (InterruptedException e) {
-//            e.printStackTrace();
-//          }
         }
       });
     }
