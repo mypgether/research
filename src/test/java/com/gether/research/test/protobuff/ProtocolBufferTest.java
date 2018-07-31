@@ -3,9 +3,8 @@ package com.gether.research.test.protobuff;
 import com.gether.research.protobuff.AppActionLog;
 import com.gether.research.protobuff.UserProto;
 import com.google.protobuf.InvalidProtocolBufferException;
-import org.junit.Test;
-
 import java.util.Arrays;
+import org.junit.Test;
 
 /**
  * Created by myp on 2017/8/13.

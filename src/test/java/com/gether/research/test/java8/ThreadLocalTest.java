@@ -2,6 +2,8 @@ package com.gether.research.test.java8;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.TimerTask;
+import io.netty.util.internal.PlatformDependent;
+import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -13,10 +15,11 @@ public class ThreadLocalTest {
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
+  private final Queue<String> timeouts = PlatformDependent.newMpscQueue();
+
   @Test
   public void testTime() throws InterruptedException {
     HashedWheelTimer timer = new HashedWheelTimer();
-    timer.start();
 
     log.info("task1 start");
     TimerTask task1 = timeout -> log.info("timeout: {}", timeout.toString());
@@ -38,7 +41,7 @@ public class ThreadLocalTest {
     threadLocal.set("nihao");
     threadLocalb.set("heheh ");
 
-    new Thread(() -> {
+    Thread slaveThread = new Thread(() -> {
       threadLocal.set("hehe string");
       threadLocalb.set("b string");
 
@@ -50,16 +53,11 @@ public class ThreadLocalTest {
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
-    }, "slave thread 1").start();
+    }, "slave thread 1");
 
-    while (true) {
-      Thread main = Thread.currentThread();
-      System.out.println(main.getName());
+    slaveThread.start();
 
-      System.out.println("main thread get -->" + threadLocal.get());
-      System.out.println("main thread get -->" + threadLocalb.get());
-      Thread.sleep(5000);
-    }
+    slaveThread.join();
   }
 
   static class LocalVariable {

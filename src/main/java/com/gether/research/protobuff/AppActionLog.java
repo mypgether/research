@@ -1657,67 +1657,40 @@ public final class AppActionLog {
     public enum ACTIONTYPE
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
-       * <code>LIVE = 1;</code>
+       * <code>APP_OPEN = 1;</code>
        */
-      LIVE(0, 1),
+      APP_OPEN(0, 1),
       /**
-       * <code>PLAYBACK = 2;</code>
+       * <code>LOGIN = 2;</code>
        */
-      PLAYBACK(1, 2),
+      LOGIN(1, 2),
       /**
-       * <code>APP_OPEN = 3;</code>
+       * <code>QUICK_LOGIN = 3;</code>
        */
-      APP_OPEN(2, 3),
-      /**
-       * <code>MAKE_CLIP = 4;</code>
-       */
-      MAKE_CLIP(3, 4),
-      /**
-       * <code>LOGIN = 5;</code>
-       */
-      LOGIN(4, 5),
-      /**
-       * <code>QUICK_LOGIN = 6;</code>
-       */
-      QUICK_LOGIN(5, 6),
+      QUICK_LOGIN(2, 3),
       ;
 
       /**
-       * <code>LIVE = 1;</code>
+       * <code>APP_OPEN = 1;</code>
        */
-      public static final int LIVE_VALUE = 1;
+      public static final int APP_OPEN_VALUE = 1;
       /**
-       * <code>PLAYBACK = 2;</code>
+       * <code>LOGIN = 2;</code>
        */
-      public static final int PLAYBACK_VALUE = 2;
+      public static final int LOGIN_VALUE = 2;
       /**
-       * <code>APP_OPEN = 3;</code>
+       * <code>QUICK_LOGIN = 3;</code>
        */
-      public static final int APP_OPEN_VALUE = 3;
-      /**
-       * <code>MAKE_CLIP = 4;</code>
-       */
-      public static final int MAKE_CLIP_VALUE = 4;
-      /**
-       * <code>LOGIN = 5;</code>
-       */
-      public static final int LOGIN_VALUE = 5;
-      /**
-       * <code>QUICK_LOGIN = 6;</code>
-       */
-      public static final int QUICK_LOGIN_VALUE = 6;
+      public static final int QUICK_LOGIN_VALUE = 3;
 
 
       public final int getNumber() { return value; }
 
       public static ACTIONTYPE valueOf(int value) {
         switch (value) {
-          case 1: return LIVE;
-          case 2: return PLAYBACK;
-          case 3: return APP_OPEN;
-          case 4: return MAKE_CLIP;
-          case 5: return LOGIN;
-          case 6: return QUICK_LOGIN;
+          case 1: return APP_OPEN;
+          case 2: return LOGIN;
+          case 3: return QUICK_LOGIN;
           default: return null;
         }
       }
@@ -1821,7 +1794,7 @@ public final class AppActionLog {
     }
 
     private void initFields() {
-      actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.LIVE;
+      actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.APP_OPEN;
       properties_ = java.util.Collections.emptyList();
     }
     private byte memoizedIsInitialized = -1;
@@ -1988,7 +1961,7 @@ public final class AppActionLog {
 
       public Builder clear() {
         super.clear();
-        actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.LIVE;
+        actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.APP_OPEN;
         bitField0_ = (bitField0_ & ~0x00000001);
         if (propertiesBuilder_ == null) {
           properties_ = java.util.Collections.emptyList();
@@ -2119,7 +2092,7 @@ public final class AppActionLog {
       }
       private int bitField0_;
 
-      private com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.LIVE;
+      private com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.APP_OPEN;
       /**
        * <code>required .com.gether.research.protobuff.AppAction.ACTIONTYPE actiontype = 1;</code>
        */
@@ -2149,7 +2122,7 @@ public final class AppActionLog {
        */
       public Builder clearActiontype() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.LIVE;
+        actiontype_ = com.gether.research.protobuff.AppActionLog.AppAction.ACTIONTYPE.APP_OPEN;
         onChanged();
         return this;
       }
@@ -4196,16 +4169,15 @@ public final class AppActionLog {
       "\005 \001(\0132).com.gether.research.protobuff.De" +
       "viceInfo\022\014\n\004time\030\006 \001(\004\">\n\007NETTYPE\022\010\n\004WIF" +
       "I\020\001\022\006\n\002G2\020\002\022\006\n\002G3\020\003\022\006\n\002G4\020\004\022\006\n\002G5\020\005\022\t\n\005O" +
-      "THER\020\006\"\365\001\n\tAppAction\022G\n\nactiontype\030\001 \002(\016",
+      "THER\020\006\"\316\001\n\tAppAction\022G\n\nactiontype\030\001 \002(\016",
       "23.com.gether.research.protobuff.AppActi" +
       "on.ACTIONTYPE\022@\n\nproperties\030\002 \003(\0132,.com." +
       "gether.research.protobuff.MapFieldEntry\"" +
-      "]\n\nACTIONTYPE\022\010\n\004LIVE\020\001\022\014\n\010PLAYBACK\020\002\022\014\n" +
-      "\010APP_OPEN\020\003\022\r\n\tMAKE_CLIP\020\004\022\t\n\005LOGIN\020\005\022\017\n" +
-      "\013QUICK_LOGIN\020\006\"+\n\rMapFieldEntry\022\013\n\003key\030\001" +
-      " \002(\t\022\r\n\005value\030\002 \002(\t\"b\n\nDeviceInfo\022\022\n\ndev" +
-      "icetype\030\001 \001(\t\022\017\n\007version\030\002 \001(\t\022\014\n\004imei\030\003" +
-      " \001(\t\022\016\n\006ostype\030\004 \001(\t\022\021\n\tosversion\030\005 \001(\t"
+      "6\n\nACTIONTYPE\022\014\n\010APP_OPEN\020\001\022\t\n\005LOGIN\020\002\022\017" +
+      "\n\013QUICK_LOGIN\020\003\"+\n\rMapFieldEntry\022\013\n\003key\030" +
+      "\001 \002(\t\022\r\n\005value\030\002 \002(\t\"b\n\nDeviceInfo\022\022\n\nde" +
+      "vicetype\030\001 \001(\t\022\017\n\007version\030\002 \001(\t\022\014\n\004imei\030" +
+      "\003 \001(\t\022\016\n\006ostype\030\004 \001(\t\022\021\n\tosversion\030\005 \001(\t"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

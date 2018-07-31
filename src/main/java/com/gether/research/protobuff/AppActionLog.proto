@@ -12,7 +12,7 @@ message AppLog {
 }
 
 message AppAction {
-    enum ACTIONTYPE {LIVE = 1; PLAYBACK = 2; APP_OPEN = 3; MAKE_CLIP = 4; LOGIN = 5; QUICK_LOGIN = 6; }
+    enum ACTIONTYPE {APP_OPEN = 1; LOGIN = 2; QUICK_LOGIN = 3; }
 
     required ACTIONTYPE actiontype = 1;
     repeated MapFieldEntry properties = 2;

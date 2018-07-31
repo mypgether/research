@@ -1,4 +1,4 @@
-package com.gether.research.test.java8.jmm;
+package com.gether.research.test.jmm;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
