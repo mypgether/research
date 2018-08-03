@@ -5,4 +5,5 @@
   default-autowire="byName">
 
   <bean id="userUservice" class="com.gether.research.service.impl.UserServiceImpl"/>
+  <bean id="mailService" class="com.gether.research.service.impl.MailServiceImpl"/>
 </beans>

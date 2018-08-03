@@ -53,4 +53,12 @@ public class UserServiceImpl implements UserService {
   public String getUserName(String userName) {
     return "this is " + userName;
   }
+
+  public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
+
+  public void setMailService(MailService mailService) {
+    this.mailService = mailService;
+  }
 }
