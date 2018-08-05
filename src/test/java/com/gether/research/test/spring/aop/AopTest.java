@@ -8,6 +8,10 @@ import org.springframework.aop.SpringProxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+/**
+ * @see com.gether.research.test.designpatterns.proxy.jdk.JdkProxyTest#testProxy
+ * @see com.gether.research.test.designpatterns.proxy.cglib.CglibProxyTest#testProxy
+ */
 public class AopTest {
 
   @Test
@@ -23,7 +27,7 @@ public class AopTest {
 
 
   @Test
-  public void testIsAssignableFrom(){
+  public void testIsAssignableFrom() {
     System.out.println(SpringProxy.class.isAssignableFrom(UserServiceImpl.class));
     System.out.println(SpringProxy.class.isAssignableFrom(SpringProxy.class));
     System.out.println(SpringProxy.class.isAssignableFrom(UserService.class));

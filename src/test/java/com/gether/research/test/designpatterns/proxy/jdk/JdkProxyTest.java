@@ -8,7 +8,7 @@ import org.junit.Test;
 public class JdkProxyTest {
 
   @Test
-  public void test() {
+  public void testProxy() {
     UserService obj = new UserServiceImpl();
 
     String userName = "gether";
