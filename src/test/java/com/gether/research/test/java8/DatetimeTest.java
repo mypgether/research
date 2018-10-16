@@ -44,10 +44,5 @@ public class DatetimeTest {
     // a- b
     System.out.println(ChronoUnit.DAYS.between(b, a));
     System.out.println(ChronoUnit.HALF_DAYS.between(b, a));
-    //Duration duration = Duration.between(b, a);
-    //System.out.println(duration.toDays());
-    //System.out.println(duration.to);
-    //System.out.println(duration.get(TemporalUnit));
-    //System.out.println(duration.toDays());
   }
 }

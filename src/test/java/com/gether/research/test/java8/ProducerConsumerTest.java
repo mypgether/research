@@ -10,22 +10,6 @@ import com.gether.research.jvm.producer.ShareObjService;
  */
 public class ProducerConsumerTest {
 
-  //public static void main(String[] args) throws InterruptedException {
-  //
-  //    // Object on which producer and consumer thread will operate
-  //    ProducerConsumerImpl sharedObject = new ProducerConsumerImpl();
-  //
-  //    // creating producer and consumer threads
-  //    producer p = new producer(sharedObject);
-  //    Consumer c = new Consumer(sharedObject);
-  //
-  //    // starting producer and consumer threads
-  //    p.start();
-  //    c.start();
-  //
-  //    p.join();
-  //    c.join();
-  //}
   public static void main(String[] args) throws InterruptedException {
 
     // Object on which producer and consumer thread will operate

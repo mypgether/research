@@ -2,8 +2,6 @@ package com.gether.research.test.java8;
 
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.TimerTask;
-import io.netty.util.internal.PlatformDependent;
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -14,8 +12,6 @@ import org.slf4j.LoggerFactory;
 public class ThreadLocalTest {
 
   protected final Logger log = LoggerFactory.getLogger(this.getClass());
-
-  private final Queue<String> timeouts = PlatformDependent.newMpscQueue();
 
   @Test
   public void testTime() throws InterruptedException {
