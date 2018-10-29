@@ -34,7 +34,6 @@ public class RedisTest {
 
   RedisTemplate redisTemplate = null;
 
-
   @Before
   public void before() {
     JedisConnectionFactory jedisConnectionFactory = null;
@@ -110,14 +109,12 @@ public class RedisTest {
   }
 
   @Test
-  public void getLock() {
+  public void getLock() throws InterruptedException {
     ForkJoinPool forkJoinPool = new ForkJoinPool(10);
     for (int i = 0; i < 2; i++) {
       forkJoinPool.submit(new NeverStopAction());
     }
-    while (true) {
-
-    }
+    Thread.sleep(20 * 1000);
   }
 
   @Test

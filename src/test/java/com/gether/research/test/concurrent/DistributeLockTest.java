@@ -11,7 +11,6 @@ import java.util.concurrent.ExecutionException;
  */
 public class DistributeLockTest {
 
-
   @Test
   public void redisLock() throws ExecutionException, InterruptedException {
     String ip = "localhost";
