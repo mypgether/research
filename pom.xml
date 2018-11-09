@@ -21,7 +21,7 @@
     <java.version>1.8</java.version>
 
     <commons.beanutils.version>1.8.3</commons.beanutils.version>
-    <commons.codec.version>1.7</commons.codec.version>
+    <commons.codec.version>1.11</commons.codec.version>
     <commons.collections.version>3.2.1</commons.collections.version>
     <commons.lang.version>2.6</commons.lang.version>
     <commons.io.version>2.4</commons.io.version>
@@ -64,7 +64,6 @@
     <flink.version>1.3.2</flink.version>
     <jetty.version>9.4.6.v20170531</jetty.version>
     <flume.version>1.8.0</flume.version>
-    <test4j.version>2.0.7</test4j.version>
     <jmockit.version>1.39</jmockit.version>
     <jmockit.coverage.version>1.23</jmockit.coverage.version>
     <threadlocal.version>2.5.1</threadlocal.version>
@@ -421,20 +420,6 @@
       <groupId>org.apache.flume</groupId>
       <artifactId>flume-ng-core</artifactId>
       <version>${flume.version}</version>
-    </dependency>
-
-    <!-- test4j -->
-    <dependency>
-      <groupId>org.test4j</groupId>
-      <artifactId>test4j.integrated</artifactId>
-      <version>${test4j.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.test4j</groupId>
-      <artifactId>test4j.junit</artifactId>
-      <version>${test4j.version}</version>
-      <scope>test</scope>
     </dependency>
 
     <dependency>

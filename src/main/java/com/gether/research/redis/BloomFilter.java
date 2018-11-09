@@ -100,8 +100,8 @@ public class BloomFilter {
       pipeline = jedis.pipelined();
       for (long index : indexs) {
         pipeline.setbit(getRedisKey(where), index, true);
+        pipeline.sync();
       }
-      pipeline.sync();
     } finally {
       try {
         if (pipeline != null) {

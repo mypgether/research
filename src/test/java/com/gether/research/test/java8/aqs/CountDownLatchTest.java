@@ -21,7 +21,19 @@ public class CountDownLatchTest {
       }
       System.out.println("thread main end");
     });
+
+    Thread main2 = new Thread(() -> {
+      System.out.println("thread main2 is ready");
+      try {
+        cdl.await();
+        System.out.println("thread main2 start");
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("thread main2 end");
+    });
     main.start();
+    main2.start();
 
     for (int i = 0; i < threads; i++) {
       int finalI = i;
@@ -38,6 +50,7 @@ public class CountDownLatchTest {
 
     try {
       main.join();
+      main2.join();
     } catch (InterruptedException e) {
       e.printStackTrace();
     }

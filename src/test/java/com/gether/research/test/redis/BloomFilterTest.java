@@ -19,9 +19,20 @@ public class BloomFilterTest {
     int port = 6379;
     BloomFilter bloomFilter = new BloomFilter(expectedInsertions, fpp, host, port);
 
-    Assert.assertFalse(bloomFilter.isExist("bloom_test", "gether.me1"));
-    Assert.assertTrue(bloomFilter.isExist("bloom_test", "gether.me1"));
-    Assert.assertFalse(bloomFilter.isExist("bloom_test", "gether1"));
-    Assert.assertTrue(bloomFilter.isExist("bloom_test", "gether1"));
+    long start = System.currentTimeMillis();
+    String key = "bloom_test_" + start;
+
+    Assert.assertFalse(bloomFilter.isExist(key, "gether.me1"));
+    Assert.assertTrue(bloomFilter.isExist(key, "gether.me1"));
+    Assert.assertFalse(bloomFilter.isExist(key, "gether1"));
+    Assert.assertTrue(bloomFilter.isExist(key, "gether1"));
+  }
+
+  @Test
+  public void testFilte123r() {
+    int a = 2;
+    System.out.println("a 非的结果是：" + (~a));
+    System.out.println("a 非的结果是：" + (~a));
+    System.out.println("a 非的结果是：" + (~a));
   }
 }
