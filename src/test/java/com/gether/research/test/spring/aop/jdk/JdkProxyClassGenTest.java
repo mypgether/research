@@ -1,4 +1,4 @@
-package com.gether.research.test.designpatterns.proxy.jdk;
+package com.gether.research.test.spring.aop.jdk;
 
 import com.gether.research.service.UserService;
 import java.io.File;
@@ -14,7 +14,7 @@ public class JdkProxyClassGenTest {
     String proxyName = "UserServiceProxy";
     byte[] classFile = ProxyGenerator
         .generateProxyClass(proxyName, new Class[]{UserService.class});
-    String path = System.getProperty("user.dir");
+    String path = System.getProperty("user.dir") + "/aop/jdk";
     File file = new File(path + "/" + proxyName + ".class");
     FileOutputStream fos = new FileOutputStream(file);
     fos.write(classFile);

@@ -4,7 +4,18 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
   <bean id="logAdvisor" class="com.gether.research.aop.LogAdvisor"></bean>
+  <bean id="logAdvice" class="com.gether.research.aop.LogAdvice"></bean>
+
   <bean id="userService" class="com.gether.research.service.impl.UserServiceImpl"></bean>
+
+  <bean id="afterReturningAdviceInterceptor"
+    class="org.springframework.aop.framework.adapter.AfterReturningAdviceInterceptor">
+    <constructor-arg index="0" ref="logAdvice"/>
+  </bean>
+
+  <bean id="proxyFactory" class="org.springframework.aop.framework.ProxyFactory">
+    <constructor-arg index="0" ref="userService"/>
+  </bean>
 
   <bean id="testProxyFactoryBean" class="org.springframework.aop.framework.ProxyFactoryBean">
     <property name="targetName">

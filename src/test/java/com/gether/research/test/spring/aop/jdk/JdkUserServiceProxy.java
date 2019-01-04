@@ -1,4 +1,4 @@
-package com.gether.research.test.designpatterns.proxy.jdk;
+package com.gether.research.test.spring.aop.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

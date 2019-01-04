@@ -1,4 +1,4 @@
-package com.gether.research.test.designpatterns.proxy.jdk;
+package com.gether.research.test.spring.aop.jdk;
 
 import com.gether.research.service.UserService;
 import com.gether.research.service.impl.UserServiceImpl;

@@ -1,4 +1,4 @@
-package com.gether.research.test.designpatterns.proxy.cglib;
+package com.gether.research.test.spring.aop.cglib;
 
 public class UserFacade {
 

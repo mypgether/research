@@ -1,4 +1,4 @@
-package com.gether.research.test.designpatterns.proxy.cglib;
+package com.gether.research.test.spring.aop.cglib;
 
 import java.lang.reflect.Method;
 import org.apache.commons.lang3.StringUtils;
