@@ -1,4 +1,4 @@
-package com.gether.research.test.java8.aqs;
+package com.gether.research.test.ms;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

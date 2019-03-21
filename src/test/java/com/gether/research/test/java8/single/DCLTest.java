@@ -26,7 +26,7 @@ public class DCLTest {
         a.start();
 
       }
-      Thread.sleep(100);
+      Thread.sleep(10);
     }
   }
 }

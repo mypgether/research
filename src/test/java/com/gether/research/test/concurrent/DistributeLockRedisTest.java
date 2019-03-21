@@ -1,9 +1,12 @@
 package com.gether.research.test.concurrent;
 
 import com.gether.research.test.redis.BaseRedisTest;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.lang.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
@@ -41,7 +44,7 @@ public class DistributeLockRedisTest extends BaseRedisTest {
                     System.currentTimeMillis() - start));
             start = System.currentTimeMillis();
           } else {
-            System.out.println("Thread " + Thread.currentThread().getName() + " start get lock ");
+//            System.out.println("Thread " + Thread.currentThread().getName() + " start get lock ");
             try {
               Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -52,6 +55,48 @@ public class DistributeLockRedisTest extends BaseRedisTest {
       }).start();
     }
     Thread.sleep(20 * 1000);
+  }
+
+  @Test
+  public void getLockWithJedisMulti() throws InterruptedException {
+    AtomicInteger atomicInteger = new AtomicInteger(0);
+    int loop = 150;
+    for (int i = 0; i < loop; i++) {
+      int n = 10;
+      String lockName = "lock";
+      CountDownLatch latch = new CountDownLatch(n);
+      CountDownLatch waitComplete = new CountDownLatch(n);
+      for (int j = 0; j < n; j++) {
+        new Thread(() -> {
+          try {
+            latch.await();
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          Jedis jedis = new Jedis("127.0.0.1", 6379);
+          long start = System.currentTimeMillis();
+          String result = jedis.set(lockName, "lock value", "NX", "EX", 2);
+          if (StringUtils.equalsIgnoreCase(result, "OK")) {
+            System.out.println(
+                "Thread " + Thread.currentThread().getName() + " get lock cost time " + (
+                    System.currentTimeMillis() - start));
+            atomicInteger.incrementAndGet();
+          }
+          waitComplete.countDown();
+        }).start();
+        latch.countDown();
+      }
+      Jedis jedis = new Jedis("127.0.0.1", 6379);
+      Long a = 0L;
+      while (true) {
+        a = jedis.del(lockName);
+        if (a == 1) {
+          break;
+        }
+      }
+      waitComplete.await();
+    }
+    Assert.assertEquals(loop, atomicInteger.get());
   }
 
   public class NeverStopAction extends RecursiveAction {

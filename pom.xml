@@ -68,6 +68,8 @@
     <jmockit.coverage.version>1.23</jmockit.coverage.version>
     <threadlocal.version>2.5.1</threadlocal.version>
     <disruptor.version>3.4.2</disruptor.version>
+    <cglib.version>3.2.4</cglib.version>
+    <rocketmq.version>4.3.0</rocketmq.version>
   </properties>
 
   <dependencies>
@@ -431,6 +433,18 @@
       <groupId>com.lmax</groupId>
       <artifactId>disruptor</artifactId>
       <version>${disruptor.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>${cglib.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-client</artifactId>
+      <version>${rocketmq.version}</version>
     </dependency>
   </dependencies>
 

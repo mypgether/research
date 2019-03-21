@@ -2,6 +2,7 @@ package com.gether.research.test.redis;
 
 import com.google.common.collect.Maps;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.springframework.data.redis.core.Cursor;
@@ -92,5 +93,30 @@ public class RedisTest extends BaseRedisTest {
       startCursor = result.getStringCursor();
     }
     System.err.println(count);
+  }
+
+  @Test
+  public void testInc() throws InterruptedException {
+    int n = 10;
+    String key = "inc_key_3";
+    CountDownLatch latch = new CountDownLatch(n);
+    CountDownLatch waitComplete = new CountDownLatch(n);
+    for (int i = 0; i < n; i++) {
+      new Thread(() -> {
+        try {
+          latch.await();
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        for (int j = 0; j < 10000; j++) {
+          redisTemplate.opsForValue().increment(key, 1);
+        }
+        waitComplete.countDown();
+      }).start();
+      latch.countDown();
+    }
+
+    waitComplete.await();
+    System.out.println(redisTemplate.opsForValue().get(key));
   }
 }
