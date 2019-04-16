@@ -37,7 +37,8 @@ public class DisruptorTest {
       return event;
     }, 2, executor, ProducerType.MULTI,
         new YieldingWaitStrategy());
-    disruptor.handleEventsWith(new MyHandler("first"), new MyHandler("second"));
+//    disruptor.handleEventsWith(new MyHandler("first"), new MyHandler("second"));
+    disruptor.handleEventsWith(new MyHandler("first"));
     disruptor.setDefaultExceptionHandler(new IgnoreExceptionHandler());
     disruptor.start();
 
@@ -98,8 +99,8 @@ public class DisruptorTest {
     public void onEvent(MsgSendDto event, long sequence, boolean endOfBatch) throws Exception {
       Long id = Thread.currentThread().getId();
       String name = Thread.currentThread().getName();
-      log.info("{} threadid: {} ,thread name: {} ,objContent: {}", handlerName, id, name,
-          event.getCount());
+      log.info("{} threadid: {} ,thread name: {} ,objContent: {} ,endOfBatch: {}", handlerName, id,
+          name, event.getCount(), endOfBatch);
     }
   }
 

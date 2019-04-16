@@ -1,11 +1,10 @@
-package com.gether.research.test.rocketmq;
+package com.gether.research.test.mq.rocketmq;
 
 import java.io.UnsupportedEncodingException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
-import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.client.producer.SendCallback;
@@ -28,8 +27,7 @@ public class RocketMQTest {
   public static final String MSG = "this is msg";
 
   @Test
-  public void testProduce()
-      throws UnsupportedEncodingException, InterruptedException, RemotingException, MQClientException, MQBrokerException {
+  public void testProduce() throws UnsupportedEncodingException, MQClientException {
     //Instantiate with a producer group name.
     DefaultMQProducer producer = new DefaultMQProducer("producer_sync");
     // Specify name server addresses.
@@ -59,7 +57,7 @@ public class RocketMQTest {
 
   @Test
   public void testProduceAsync()
-      throws UnsupportedEncodingException, InterruptedException, RemotingException, MQClientException, MQBrokerException {
+      throws UnsupportedEncodingException, MQClientException, InterruptedException {
     //Instantiate with a producer group name.
     DefaultMQProducer producer = new DefaultMQProducer("producer_async");
     // Specify name server addresses.
@@ -115,24 +113,10 @@ public class RocketMQTest {
     consumer.setNamesrvAddr(NAME_SERVER);
     consumer.setPullBatchSize(10);
     consumer.setConsumeMessageBatchMaxSize(10);
-    // Subscribe one more more topics to consume.
     consumer.subscribe("TopicTest", "*");
     AtomicInteger count = new AtomicInteger();
     // Register callback to execute on arrival of messages fetched from brokers.
     consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
-//      int cnt = count.incrementAndGet();
-//      if (cnt % 10 == 0) {
-//        try {
-//          Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//          e.printStackTrace();
-//        }
-//      }
-//      for (MessageExt msg : msgs) {
-//        String body = new String(msg.getBody());
-//        System.out.println(
-//            Thread.currentThread().getName() + "|" + context.getMessageQueue() + "|" + body);
-//      }
       System.out.println(
           Thread.currentThread().getName() + "|" + context.getMessageQueue() + "|" + msgs.size());
       return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;

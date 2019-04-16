@@ -1,4 +1,4 @@
-package com.gether.research.test.rocketmq;
+package com.gether.research.test.java8.threadpool;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
