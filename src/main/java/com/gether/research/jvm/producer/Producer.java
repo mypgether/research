@@ -5,14 +5,14 @@ package com.gether.research.jvm.producer;
  */
 public class Producer extends Thread {
 
-    ShareObjService shareObjService;
+  ShareObjService shareObjService;
 
-    public Producer(ShareObjService shareObjService) {
-        this.shareObjService = shareObjService;
-    }
+  public Producer(ShareObjService shareObjService) {
+    this.shareObjService = shareObjService;
+  }
 
-    @Override
-    public void run() {
-        shareObjService.produce();
-    }
+  @Override
+  public void run() {
+    shareObjService.produce();
+  }
 }

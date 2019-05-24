@@ -6,14 +6,14 @@ package com.gether.research.jvm.producer;
 public class Consumer extends Thread {
 
 
-    ShareObjService shareObjService;
+  ShareObjService shareObjService;
 
-    public Consumer(ShareObjService shareObjService) {
-        this.shareObjService = shareObjService;
-    }
+  public Consumer(ShareObjService shareObjService) {
+    this.shareObjService = shareObjService;
+  }
 
-    @Override
-    public void run() {
-        shareObjService.consumer();
-    }
+  @Override
+  public void run() {
+    shareObjService.consumer();
+  }
 }

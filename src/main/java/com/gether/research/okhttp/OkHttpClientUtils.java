@@ -1,6 +1,10 @@
 package com.gether.research.okhttp;
 
-import okhttp3.Dispatcher;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -8,16 +12,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.internal.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by myp on 2017/8/10.
@@ -34,12 +30,12 @@ public class OkHttpClientUtils {
 
   private static final BlockingQueue QUEUE = new LinkedBlockingQueue<Runnable>(1000);
 
-  private static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(CORE_POLL_SIZE,
-      MAX_POLL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, QUEUE,
-      Util.threadFactory("OkHttp Dispatcher", false));
+//  private static final ThreadPoolExecutor executorService = new ThreadPoolExecutor(CORE_POLL_SIZE,
+//      MAX_POLL_SIZE, KEEP_ALIVE_TIME, TimeUnit.SECONDS, QUEUE,
+//      Util.threadFactory("OkHttp Dispatcher", false));
 
   private static OkHttpClient client = new OkHttpClient().newBuilder()
-      .dispatcher(new Dispatcher(executorService))
+//      .dispatcher(new Dispatcher(executorService))
       .connectTimeout(10, TimeUnit.SECONDS)
       .writeTimeout(10, TimeUnit.SECONDS)
       .readTimeout(30, TimeUnit.SECONDS)

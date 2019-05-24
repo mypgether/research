@@ -13,7 +13,7 @@ public class GuavaTest {
 
   @Test
   public void test() {
-    Cache<String, String> cache = CacheBuilder.newBuilder().maximumSize(10 * 1000)
+    Cache<String, String> cache = CacheBuilder.newBuilder().maximumSize(1)
         .expireAfterWrite(2, TimeUnit.HOURS).build();
     cache.put("b", "b");
 
