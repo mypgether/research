@@ -8,7 +8,7 @@
 * flume
 * mongodb
 * redis
-* yycat
+* mycat
 * protobuff
 * flink
 * kafka
