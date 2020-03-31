@@ -23,6 +23,7 @@ public class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
         } else {
             System.out.println("key is null");
         }
+
         StringTokenizer tokenizer = new StringTokenizer(value.toString());
         while (tokenizer.hasMoreTokens()) {
             word.set(tokenizer.nextToken());
