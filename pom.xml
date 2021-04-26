@@ -24,7 +24,7 @@
         <commons.codec.version>1.11</commons.codec.version>
         <commons.collections.version>3.2.1</commons.collections.version>
         <commons.lang.version>2.6</commons.lang.version>
-        <commons.io.version>2.4</commons.io.version>
+        <commons.io.version>2.7</commons.io.version>
         <commons.pool.version>1.6</commons.pool.version>
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <commons.configuration.version>1.10</commons.configuration.version>
